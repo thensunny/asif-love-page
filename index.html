@@ -1,263 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For My Love 💖</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>For My Love 💖</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body {
-margin: 0;
-height: 100vh;
-display: flex;
-justify-content: center;
-align-items: center;
-background: linear-gradient(135deg, #ff4e8b, #a64bf4);
-font-family: 'Segoe UI', sans-serif;
-color: white;
-text-align: center;
-overflow: hidden;
-}
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ff4e8b, #a64bf4);
+            font-family: 'Segoe UI', sans-serif;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
 
-.card {
-background: rgba(255,255,255,0.15);
-padding: 25px;
-border-radius: 20px;
-width: 90%;
-max-width: 360px;
-box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-z-index: 2;
-}
+        .card {
+            background: rgba(255,255,255,0.15);
+            padding: 25px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 360px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            z-index: 2;
+            transition: all 0.5s ease;
+        }
 
-.cat img {
-width: 140px;
-margin-bottom: 10px;
-}
+        .card.expanded {
+            max-width: 500px;
+        }
 
-input {
-width: 90%;
-padding: 12px;
-border-radius: 20px;
-border: none;
-font-size: 16px;
-margin-top: 10px;
-outline: none;
-}
+        .cat img {
+            width: 180px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            transition: all 0.5s ease;
+        }
 
-.link-box {
-margin-top: 10px;
-font-size: 14px;
-word-break: break-all;
-}
+        .cat img.big-gif {
+            width: 100%;
+            height: auto;
+            max-height: 350px;
+        }
 
-.buttons {
-margin-top: 25px;
-position: relative;
-height: 150px;
-}
+        #inputSection {
+            margin-bottom: 15px;
+        }
 
-button {
-border: none;
-padding: 14px 26px;
-border-radius: 30px;
-font-size: 15px;
-cursor: pointer;
-transition: 0.3s ease;
-position: absolute;
-}
+        input {
+            width: 85%;
+            padding: 12px;
+            border-radius: 20px;
+            border: none;
+            font-size: 16px;
+            margin-top: 10px;
+            outline: none;
+            color: #333;
+        }
 
-#genBtn {
-background: #ffd1e3;
-color: #b1004b;
-position: static;
-margin-top: 10px;
-}
+        #genBtn {
+            background: #ffd1e3;
+            color: #b1004b;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 90%;
+            font-weight: bold;
+        }
 
-#yesBtn {
-background: white;
-color: #ff4e8b;
-left: 50%;
-transform: translateX(-50%) scale(1);
-}
+        .link-box {
+            margin-top: 10px;
+            font-size: 14px;
+            word-break: break-all;
+            background: rgba(0,0,0,0.1);
+            padding: 10px;
+            border-radius: 10px;
+        }
 
-#noBtn {
-background: #ff4e8b;
-color: white;
-top: 75px;
-left: 50%;
-transform: translateX(-50%);
-}
+        .buttons {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
 
-.confetti {
-position: fixed;
-width: 8px;
-height: 8px;
-animation: fall 3s linear forwards;
-}
+        .action-btn {
+            border: none;
+            padding: 14px 26px;
+            border-radius: 30px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            width: 220px; /* লেখা বড় হওয়ার কারণে উইডথ একটু বাড়ানো হয়েছে */
+        }
 
-@keyframes fall {
-from { transform: translateY(-10vh) rotate(0deg); }
-to { transform: translateY(110vh) rotate(720deg); }
-}
-</style>
+        #yesBtn {
+            background: white;
+            color: #ff4e8b;
+        }
+
+        #noBtn {
+            background: #ff4e4e;
+            color: white;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            z-index: 1;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-10vh) rotate(0deg); }
+            to { transform: translateY(110vh) rotate(720deg); }
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="card" id="mainCard">
+    <div class="cat">
+        <img id="catImg" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
+    </div>
 
-<div class="cat">
-<img id="catImg" src="https://media.giphy.com/media/mlvseq9yvZhba/giphy.gif">
-</div>
+    <h1 id="question">Will you be my Valentine, My Love? 💖</h1>
 
-<h1 id="question">Will you be my Valentine, My Love? 💖</h1>
+    <div id="inputSection">
+        <input type="text" id="nameInput" placeholder="Enter her name 💕">
+        <button id="genBtn" onclick="generateLink()">Generate Love Link 💌</button>
+    </div>
+    
+    <div class="link-box" id="linkBox" style="display:none;"></div>
 
-<input type="text" id="nameInput" placeholder="Enter her name 💕">
-
-<button id="genBtn" onclick="generateLink()">
-Generate Love Link 💌
-</button>
-
-<div class="link-box" id="linkBox"></div>
-
-<div class="buttons">
-<button id="yesBtn" onclick="yesClicked()">❤️ Yes</button>
-<button id="noBtn" onclick="noClicked()">❌ No</button>
-</div>
-
+    <div class="buttons" id="actionButtons">
+        <button id="yesBtn" class="action-btn" onclick="yesClicked()">❤️ Yes</button>
+        <button id="noBtn" class="action-btn" onclick="noClicked()">❌ No</button>
+    </div>
 </div>
 
 <audio id="heartBreak" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-crying-heart-break-1116.mp3"></audio>
 <audio id="loveMusic" src="https://assets.mixkit.co/music/preview/mixkit-happy-love-song-493.mp3"></audio>
 
 <script>
-
 let wifeName = "My Love";
 let noCount = 0;
-let yesScale = 1;
 
-/* Read name from URL */
+// কান্নার GIF লিস্ট
+const cryGifs = [
+    "https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2s2aXc1aDcxcnVrZmw4bnRiNXRsc2FkY2ZwMjljM2xqejJzdGM5aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/ORTPDqxMQD4I/giphy.gif",
+    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExam9obnIyeDBvb3BhZnU3NHJsMWw0OXp3dnJuNjMwMDN5cjRnZ2poYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/lwYxf0qKEjnoI/giphy.gif",
+    "https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnNkdnVyY2NjMWh5dmZ5MWRmbDF2Mnd2a29vcW5sMnN5NGQya3h5aCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/tBC3xo1Dipw5V3rxbq/giphy.gif"
+];
+
+// আপনার পছন্দের মেসেজ লিস্ট
+const noMessages = [
+    "Don't do this",
+    "I am crying",
+    "Please don't do this",
+    "You are hurting me...",
+    "Why are you doing this? 😭"
+];
+
 document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const nameFromUrl = params.get("name");
 
-const params = new URLSearchParams(window.location.search);
-const name = params.get("name");
-
-if (name) {
-setName(name);
-document.getElementById("nameInput").value = name;
-}
-
+    if (nameFromUrl) {
+        setName(nameFromUrl);
+        document.getElementById("inputSection").style.display = "none";
+    }
 });
 
-/* Set Name */
-function setName(name){
-
-wifeName = decodeURIComponent(name)
-.trim()
-.replace(/\b\w/g, c => c.toUpperCase());
-
-document.title = `For ${wifeName} 💖`;
-
-document.getElementById("question").innerText =
-`Will you be my Valentine, ${wifeName}? 💖`;
-
+function setName(name) {
+    wifeName = decodeURIComponent(name).trim().replace(/\b\w/g, c => c.toUpperCase());
+    document.title = `For ${wifeName} 💖`;
+    document.getElementById("question").innerText = `Will you be my Valentine, ${wifeName}? 💖`;
 }
 
-/* Generate Link */
-function generateLink(){
-
-const input = document.getElementById("nameInput").value.trim();
-
-if(!input){
-alert("Please enter her name 💕");
-return;
+function generateLink() {
+    const input = document.getElementById("nameInput").value.trim();
+    if (!input) {
+        alert("Please enter a name!");
+        return;
+    }
+    setName(input);
+    let currentUrl = window.location.href.split('?')[0];
+    const finalUrl = currentUrl + "?name=" + encodeURIComponent(input);
+    const linkBox = document.getElementById("linkBox");
+    linkBox.style.display = "block";
+    linkBox.innerHTML = `💝 Share this link:<br><a href="${finalUrl}" style="color:white; font-weight:bold;">${finalUrl}</a>`;
+    document.getElementById("inputSection").style.display = "none";
 }
 
-setName(input);
+function noClicked() {
+    noCount++;
+    document.getElementById("heartBreak").play();
+    
+    // GIF পরিবর্তন
+    let gifIndex = (noCount - 1) % cryGifs.length;
+    document.getElementById("catImg").src = cryGifs[gifIndex];
 
-const url =
-window.location.origin +
-window.location.pathname +
-"?name=" +
-encodeURIComponent(input);
-
-document.getElementById("linkBox").innerHTML =
-`💝 Share this link:<br>
-<a href="${url}" target="_blank" style="color:white">${url}</a>`;
-
+    // মেসেজ পরিবর্তন (আপনার দেওয়া লিস্ট অনুযায়ী)
+    let msgIndex = (noCount - 1) % noMessages.length;
+    document.getElementById("noBtn").innerText = noMessages[msgIndex];
 }
 
-/* No Button */
-function noClicked(){
-
-noCount++;
-
-document.getElementById("heartBreak").play();
-
-yesScale += 0.1;
-
-document.getElementById("yesBtn").style.transform =
-`translateX(-50%) scale(${yesScale})`;
-
-const cat = document.getElementById("catImg");
-const noBtn = document.getElementById("noBtn");
-
-if(noCount === 1)
-cat.src = "https://media.giphy.com/media/ROF8OQvDmxytW/giphy.gif";
-
-if(noCount === 2)
-noBtn.innerText = "Think Again 😢";
-
-if(noCount === 3)
-noBtn.innerText = "You are hurting me 💔";
-
-if(noCount >= 4){
-noBtn.innerText = "Ok… I’m crying now 😭";
-cat.src = "https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif";
+function yesClicked() {
+    document.getElementById("loveMusic").play();
+    document.getElementById("mainCard").classList.add("expanded");
+    const gif = document.getElementById("catImg");
+    gif.src = "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
+    gif.classList.add("big-gif");
+    document.getElementById("question").innerText = `Yay! I love you so much, ${wifeName}! 💖`;
+    document.getElementById("actionButtons").style.display = "none";
+    document.getElementById("linkBox").style.display = "none";
+    for(let i=0; i<50; i++) { createConfetti(); }
 }
 
+function createConfetti() {
+    const conf = document.createElement('div');
+    conf.className = 'confetti';
+    conf.style.left = Math.random() * 100 + 'vw';
+    conf.style.backgroundColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    conf.style.animationDuration = (Math.random() * 2 + 2) + 's';
+    document.body.appendChild(conf);
+    setTimeout(() => conf.remove(), 3000);
 }
-
-/* Yes Button */
-function yesClicked(){
-
-document.getElementById("loveMusic").play();
-
-document.getElementById("mainCard").innerHTML = `
-<h1>Yayyy! 😍💖</h1>
-<h2>I Love You ${wifeName} 💕</h2>
-<p>You made me the happiest person 😘</p>
-`;
-
-createConfetti();
-
-}
-
-/* Confetti Effect */
-function createConfetti(){
-
-for(let i=0;i<100;i++){
-
-const confetti = document.createElement("div");
-
-confetti.className = "confetti";
-
-confetti.style.left = Math.random()*100 + "vw";
-
-confetti.style.backgroundColor =
-["#ff4e8b","#ffd1e3","#a64bf4","#ffffff"]
-[Math.floor(Math.random()*4)];
-
-document.body.appendChild(confetti);
-
-setTimeout(()=>{
-confetti.remove();
-},3000);
-
-}
-
-}
-
 </script>
 
 </body>
